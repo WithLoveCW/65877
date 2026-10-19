@@ -56,12 +56,12 @@
     z-index: 0;
   }
 
-  /* ===== MESSAGE GROUP POSITION (Nudged Up) ===== */
+  /* ===== MESSAGE GROUP POSITION (Lowered & Tightened) ===== */
   #messageGroup {
     position: absolute;
 
-    /* POSITION INSIDE THE TICKET - moved up from 71% to 66% */
-    top: 66%;
+    /* POSITION INSIDE THE TICKET - moved down from 66% to 68.5% */
+    top: 68.5%;
     left: 50%;
 
     /* WIDTH OF TEXT AREA */
@@ -78,19 +78,19 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 6px; /* Decreased from 10px to tighten spacing */
 
     text-align: center;
   }
 
-  /* ===== MAIN MESSAGE (Bigger & Burgundy) ===== */
+  /* ===== MAIN MESSAGE (Adjusted Size & Burgundy) ===== */
   #mainMessage {
     position: relative;
     width: 100%;
     margin: 0;
 
     font-family: 'Aesthet', serif;
-    font-size: 34px; /* Increased size */
+    font-size: 31px; /* Slightly decreased from 34px to fit better */
     line-height: 1.1;
 
     color: #8b0000; /* Deep Burgundy Red */
@@ -98,13 +98,13 @@
     overflow-wrap: break-word;
   }
 
-  /* ===== SECONDARY MESSAGE (Bigger & Festive Green) ===== */
+  /* ===== SECONDARY MESSAGE (Adjusted Size & Green) ===== */
   #secondaryMessage {
     width: 90%;
     margin: 0;
 
     font-family: 'Aesthet', serif;
-    font-size: 22px; /* Increased size */
+    font-size: 21px; /* Slightly decreased from 22px */
     line-height: 1.15;
 
     color: #198754; /* Festive Green */
@@ -193,7 +193,6 @@
       canvas.width = containerWidth;
       canvas.height = containerHeight;
 
-      // Silver box region (matches the gold scratch area)
       const BOX_REGION = {
         x: 0.10,
         y: 0.55,
