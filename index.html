@@ -11,7 +11,6 @@
   <title>Scratch Card</title>
 
   <style>
-
   @font-face {
     font-family: 'Aesthet';
     src: url('./images/Aesthet-Regular2.otf') format('opentype');
@@ -46,154 +45,141 @@
       width: 100%;
       height: 100%;
       overflow: hidden;
-		visibility: hidden;
+      visibility: hidden;
     }
 
   .sc__container img {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  display: block;
-  z-index: 0;
-}
-	/* ===== MESSAGE GROUP POSITION ===== */
-#messageGroup {
-  position: absolute;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    display: block;
+    z-index: 0;
+  }
 
-  /* POSITION INSIDE THE TICKET */
-  top: 71%;
-  left: 50%;
+  /* ===== MESSAGE GROUP POSITION (Nudged Up) ===== */
+  #messageGroup {
+    position: absolute;
 
-  /* WIDTH OF TEXT AREA */
-  width: 68%;
+    /* POSITION INSIDE THE TICKET - moved up from 71% to 66% */
+    top: 66%;
+    left: 50%;
 
-  /* CENTRED - NO ROTATION */
-  transform: translate(-50%, -50%);
-  transform-origin: center center;
+    /* WIDTH OF TEXT AREA */
+    width: 75%;
 
-  z-index: 1;
-  visibility: hidden;
+    /* CENTRED - NO ROTATION */
+    transform: translate(-50%, -50%);
+    transform-origin: center center;
 
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
+    z-index: 1;
+    visibility: hidden;
 
-  text-align: center;
-}
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
 
-/* ===== MAIN MESSAGE ===== */
-#mainMessage {
-	 position: relative;
-  top: 8px;
-  width: 100%;
-  margin: 0;
+    text-align: center;
+  }
 
-  font-family: 'Aesthet', serif;
-  font-size: 29px;
-  line-height: 1.1;
+  /* ===== MAIN MESSAGE (Bigger & Burgundy) ===== */
+  #mainMessage {
+    position: relative;
+    width: 100%;
+    margin: 0;
 
-  color: #212121;
+    font-family: 'Aesthet', serif;
+    font-size: 34px; /* Increased size */
+    line-height: 1.1;
 
-  overflow-wrap: break-word;
-}
+    color: #8b0000; /* Deep Burgundy Red */
 
-/* ===== SECONDARY MESSAGE ===== */
-#secondaryMessage {
-  width: 100%;
-  margin: 0;
+    overflow-wrap: break-word;
+  }
 
-  font-family: 'Aesthet', serif;
-  font-size: 18px;
-  line-height: 1.15;
+  /* ===== SECONDARY MESSAGE (Bigger & Festive Green) ===== */
+  #secondaryMessage {
+    width: 90%;
+    margin: 0;
 
-  color: #212121;
+    font-family: 'Aesthet', serif;
+    font-size: 22px; /* Increased size */
+    line-height: 1.15;
 
-  overflow-wrap: break-word;
-}
-	  #secondaryMessage {
-  /* CHANGE SECONDARY MESSAGE WIDTH HERE */
-  width: 85%;
+    color: #198754; /* Festive Green */
 
-  margin: 0;
-
-  font-family: 'Aesthet', serif;
-  font-size: 19px;
-  line-height: 1.05;
-
- color: #212121;
-}
+    overflow-wrap: break-word;
+  }
 
    .sc__container canvas {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 2;
-	  
-}
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+  }
   </style>
 
   <!-- Confetti library -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 
 <body>
   <div class="sc__wrapper">
    <div id="js--sc--container" class="sc__container">
-  <img id="backgroundImage" src="./images/back.png" alt="Background Image" />
+     <img id="backgroundImage" src="./images/back.png" alt="Background Image" />
 
- <div id="messageGroup">
-  <div id="mainMessage"></div>
-  <div id="secondaryMessage"></div>
-</div>
+     <div id="messageGroup">
+       <div id="mainMessage"></div>
+       <div id="secondaryMessage"></div>
+     </div>
 
-  <canvas id="scratchCanvas"></canvas>
-</div>
+     <canvas id="scratchCanvas"></canvas>
+   </div>
   </div>
-<audio id="winSound" preload="auto">
-  <source src="./sounds/win.mp3" type="audio/mpeg">
-</audio>
-<audio id="bgMusic" preload="auto" loop>
-   <source id="bgMusicSource" src="./sounds/This Christmas_Short.mp3" type="audio/mpeg">
-</audio>
+
+  <audio id="winSound" preload="auto">
+    <source src="./sounds/win.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="bgMusic" preload="auto" loop>
+    <source id="bgMusicSource" src="./sounds/This Christmas_Short.mp3" type="audio/mpeg">
+  </audio>
+
   <script>
-	  const SUPABASE_URL = "https://bfzhvulpymbqzwxorzih.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_aLj5jota1g3icfvF7MROIQ_b4-yKlo3";
+    const SUPABASE_URL = "https://bfzhvulpymbqzwxorzih.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_aLj5jota1g3icfvF7MROIQ_b4-yKlo3";
 
-const supabaseClient = supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_ANON_KEY
-);
-	  // 🎵 BACKGROUND MUSIC VOLUME
-// 0.1 = 10%, 0.25 = 25%, 0.5 = 50%, 1 = 100%
-const BG_MUSIC_VOLUME = 0.5;
-	  async function loadDetails() {
-  const params = new URLSearchParams(window.location.search);
-  const revealId = params.get("id");
+    const supabaseClient = supabase.createClient(
+      SUPABASE_URL,
+      SUPABASE_ANON_KEY
+    );
 
-  if (!revealId) return;
+    const BG_MUSIC_VOLUME = 0.5;
 
-  const { data, error } = await supabaseClient
-   .from("vacation_reveals")
-    .select("*")
-    .eq("id", revealId)
-    .single();
+    async function loadDetails() {
+      const params = new URLSearchParams(window.location.search);
+      const revealId = params.get("id");
 
-  if (error || !data) {
-    console.error("Details load error:", error);
-    return;
-  }
+      if (!revealId) return;
 
-  document.getElementById("mainMessage").textContent =
-  data.main_message || "";
+      const { data, error } = await supabaseClient
+        .from("vacation_reveals")
+        .select("*")
+        .eq("id", revealId)
+        .single();
 
-document.getElementById("secondaryMessage").textContent =
-  data.secondary_message || "";
-}
+      if (error || !data) {
+        console.error("Details load error:", error);
+        return;
+      }
+
+      document.getElementById("mainMessage").textContent = data.main_message || "";
+      document.getElementById("secondaryMessage").textContent = data.secondary_message || "";
+    }
+
     document.addEventListener("DOMContentLoaded", () => {
       const canvas = document.getElementById("scratchCanvas");
       const container = document.getElementById("js--sc--container");
@@ -202,33 +188,27 @@ document.getElementById("secondaryMessage").textContent =
 
       const devicePixelRatio = window.devicePixelRatio || 1;
 
-      // Fit canvas to container
       const containerWidth = container.clientWidth * devicePixelRatio;
       const containerHeight = container.clientHeight * devicePixelRatio;
       canvas.width = containerWidth;
       canvas.height = containerHeight;
 
-      // Silver box region (approx area where progress counts)
+      // Silver box region (matches the gold scratch area)
       const BOX_REGION = {
-  x: 0.10,
-  y: 0.55,
-  width: 0.82,
-  height: 0.28
-};
+        x: 0.10,
+        y: 0.55,
+        width: 0.82,
+        height: 0.28
+      };
 
-      // Scratch state
       let isScratching = false;
       let hasFiredConfetti = false;
       let scratchMovesInBox = 0;
-
-      // ✅ Threshold tuned for your design
       const MOVES_THRESHOLD = 130;
 
-      // Smooth brush vars
       let lastX = null;
       let lastY = null;
 
-      // Load top/front scratch image
       const frontImage = new Image();
       frontImage.src = "./images/front.png";
 
@@ -237,7 +217,7 @@ document.getElementById("secondaryMessage").textContent =
         ctx.globalCompositeOperation = "destination-out";
 
         backgroundImage.style.display = "block";
-		  container.style.visibility = "visible";
+        container.style.visibility = "visible";
 
         canvas.addEventListener("mousedown", startScratch);
         canvas.addEventListener("touchstart", startScratch, { passive: false });
@@ -250,30 +230,29 @@ document.getElementById("secondaryMessage").textContent =
 
       function startScratch(event) {
         event.preventDefault();
-		  const bgMusic = document.getElementById("bgMusic");
+        const bgMusic = document.getElementById("bgMusic");
 
-if (bgMusic && bgMusic.paused) {
-  bgMusic.volume = BG_MUSIC_VOLUME;
-  bgMusic.play().catch(error => {
-    console.log("Background music could not play:", error);
-  });
-}
-		document.getElementById("messageGroup").style.visibility = "visible";
-		  const winSound = document.getElementById("winSound");
+        if (bgMusic && bgMusic.paused) {
+          bgMusic.volume = BG_MUSIC_VOLUME;
+          bgMusic.play().catch(error => {
+            console.log("Background music could not play:", error);
+          });
+        }
+        document.getElementById("messageGroup").style.visibility = "visible";
+        const winSound = document.getElementById("winSound");
 
-if (winSound && winSound.paused) {
-  winSound.volume = 0;
-
-  winSound.play()
-    .then(() => {
-      winSound.pause();
-      winSound.currentTime = 0;
-      winSound.volume = 1;
-    })
-    .catch(() => {
-      winSound.volume = 1;
-    });
-}
+        if (winSound && winSound.paused) {
+          winSound.volume = 0;
+          winSound.play()
+            .then(() => {
+              winSound.pause();
+              winSound.currentTime = 0;
+              winSound.volume = 1;
+            })
+            .catch(() => {
+              winSound.volume = 1;
+            });
+        }
         isScratching = true;
         lastX = null;
         lastY = null;
@@ -295,7 +274,6 @@ if (winSound && winSound.paused) {
 
       function scratch(event) {
         if (!isScratching) return;
-
         event.preventDefault();
 
         const rect = canvas.getBoundingClientRect();
@@ -312,7 +290,6 @@ if (winSound && winSound.paused) {
 
         const x = (clientX - rect.left) * scale;
         const y = (clientY - rect.top) * scale;
-
         const radius = 16 * scale;
 
         if (lastX !== null && lastY !== null) {
@@ -364,26 +341,22 @@ if (winSound && winSound.paused) {
         }
       }
 
-    // 🎉 Confetti (red & green only)
-function launchConfetti() {
+      function launchConfetti() {
+        const winSound = document.getElementById("winSound");
+        if (winSound) {
+          winSound.currentTime = 0;
+          winSound.play().catch(error => {
+            console.log("Win sound could not play:", error);
+          });
+        }
 
-  const winSound = document.getElementById("winSound");
-
-  if (winSound) {
-    winSound.currentTime = 0;
-    winSound.play().catch(error => {
-      console.log("Win sound could not play:", error);
-    });
-  }
-
-  if (typeof confetti !== "function") return;
+        if (typeof confetti !== "function") return;
 
         const COLORS = ["#D62828", "#198754", "#D4AF37"];
 
-        // Burst #1 immediately
         confetti({
-			ticks: 350,
-gravity: 1.2,
+          ticks: 350,
+          gravity: 1.2,
           particleCount: 220,
           spread: 70,
           startVelocity: 45,
@@ -391,11 +364,10 @@ gravity: 1.2,
           colors: COLORS
         });
 
-        // Burst #2 after 2 seconds
         setTimeout(() => {
           confetti({
-			  ticks: 350,
-gravity: 1.2,
+            ticks: 350,
+            gravity: 1.2,
             particleCount: 260,
             spread: 80,
             startVelocity: 55,
@@ -404,11 +376,10 @@ gravity: 1.2,
           });
         }, 2000);
 
-        // Burst #3 after 4 seconds
         setTimeout(() => {
           confetti({
-			  ticks: 350,
-gravity: 1.2,
+            ticks: 350,
+            gravity: 1.2,
             particleCount: 300,
             spread: 90,
             startVelocity: 60,
@@ -417,14 +388,13 @@ gravity: 1.2,
           });
         }, 4000);
 
-        // Sparkle dripping effect for 1.2s
         const duration = 1200;
         const end = Date.now() + duration;
 
         (function frame() {
           confetti({
-			  ticks: 350,
-gravity: 1.2,
+            ticks: 350,
+            gravity: 1.2,
             particleCount: 6,
             spread: 70,
             startVelocity: 30,
@@ -433,8 +403,8 @@ gravity: 1.2,
           });
 
           confetti({
-			  ticks: 350,
-gravity: 1.2,
+            ticks: 350,
+            gravity: 1.2,
             particleCount: 6,
             spread: 70,
             startVelocity: 30,
@@ -449,14 +419,12 @@ gravity: 1.2,
       }
     });
 
-	  loadDetails();
-	  
-    // Resize responsiveness
+    loadDetails();
+
     window.addEventListener("resize", () => {
       location.reload();
     });
   </script>
 </body>
-
 </html>
 
